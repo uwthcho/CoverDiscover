@@ -1,0 +1,73 @@
+<html lang = "en">
+  <head>
+      <style>
+          button {
+  background-color: cornflowerblue;
+  border: none;
+  color: white;
+  padding: 1px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+
+</style>
+      <br class ="ml-1"/>
+      <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity=
+              "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+  <body style="background-color:powderblue">
+    <title>CoverDiscover</title>
+      <h1 class= "px-4" style="font-family:Helvetica;background-color: powderblue; color: white">CoverDiscover</h1>
+      <h5 class= "px-4" style="font-family:Helvetica"> Choose a Playlist to discover covers from!</h5>
+    {% if current_user %}
+      <p class= "px-4">You are logged in as {{ current_user.displayname|escape }}.</p>
+
+      <form id= "playlist" method="post" action="/">
+       <fieldset>
+          <p >
+              <br class ="ml-1"/>
+             <h7 class= "px-4"> Select One of Your Playlists</h7>
+             <select id = "myPlaylists" name="chosenPlaylist">
+                 {% for playlist in playlists %}
+                 <option value="{{playlist.id}}" name="chosenPlaylist">{{playlist.name}}</option>
+                 {% endfor %}
+             </select>
+              <button class ="button" type="submit" value="Submit">Go</button>
+              <br class ="ml-1"/>
+          </p>
+       </fieldset>
+      </form>
+
+{% if embedded %}
+    <p> <h3 class= "px-4"> Your Top Covers Are:</h3></p>
+        <div class = "video">
+            {% for song in embedded%}
+            <h5 class= "px-4"> {{song}}</h5>
+            <div class="embed-responsive embed-responsive-16by9">
+            <iframe align = "left" width="420" height="315" class="embed-responsive-item"
+            src="{{embedded[song]}}">
+            </iframe>
+            </div>
+            <br class ="ml-1"/>
+            <br class ="ml-1"/>
+            <br class ="ml-1"/>
+            {% endfor %}
+        </ul>
+
+        </div>
+{% endif %}
+    </div>
+
+      <p class= "px-4"><a href="/auth/logout">Log out</a></p>
+    {% else %}
+      <p class= "px-4">You are not yet logged into this site</p>
+      <p class= "px-4"><a href="/auth/login">Log in to Spotify</a></p>
+    {% endif %}
+
+  </body>
+</html>
